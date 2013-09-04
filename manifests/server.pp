@@ -1,10 +1,10 @@
 class ssh::server(
   $port='22',
   $allowed_users=[],
-  $x11_forwarding='no',
-  $password_authentication='no',
+  $x11_forwarding='yes',
+  $password_authentication='yes',
   $subsystem_sftp='/usr/lib/openssh/sftp-server',
-  $permit_root_login='no',
+  $permit_root_login='yes',
   $host_keys=$ssh::params::host_keys,
 ) inherits ssh::params {
   package { 'openssh-server':
