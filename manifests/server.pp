@@ -1,22 +1,23 @@
-class ssh::server(
-  $port='22',
-  $allowed_users=[],
-  $x11_forwarding='yes',
-  $password_authentication='yes',
-  $subsystem_sftp='/usr/lib/openssh/sftp-server',
-  $permit_root_login='yes',
-  $host_keys=$ssh::params::host_keys,
-) inherits ssh::params {
-  package { 'openssh-server':
-    ensure => present,
-  }
+class ssh::server (
+  $port              = '22',
+  $allowed_users     = [],
+  $x11_forwarding    = 'yes',
+  $password_authentication      = 'yes',
+  $subsystem_sftp    = '/usr/lib/openssh/sftp-server',
+  $permit_root_login = 'yes',
+  $host_keys         = $ssh::params::host_keys,
+  $authorized_keys_command      = undef,
+  $authorized_keys_command_user = undef,
+  $allowed_groups    = [],
+  $package_version   = 'present') inherits ssh::params {
+  package { 'openssh-server': ensure => $package_version, }
 
   file { '/etc/ssh/sshd_config':
     content => template('ssh/sshd_config.erb'),
-    require => Package['openssh-server'],
-    owner => root,
-    group => root,
-    mode  => '0644'
+    before => Package['openssh-server'],
+    owner   => root,
+    group   => root,
+    mode    => '0644'
   }
 
   service { 'ssh':

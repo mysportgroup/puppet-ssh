@@ -88,6 +88,23 @@ Subsystem sftp <%= @subsystem_sftp %>
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
-<% if @allowed_users.any? %>
+<% if @authorized_keys_command -%>
+AuthorizedKeysCommand <%= @authorized_keys_command %>
+<% end -%>
+<% if @authorized_keys_command_user -%>
+<%
+if lsbdistcodename == 'squeeze' 
+  runcommand = "AuthorizedKeysCommandRunAs"
+else
+  runcommand = "AuthorizedKeysCommandUser"
+end
+-%>
+<%= runcommand %> <%= @authorized_keys_command_user %>
+<% end -%>
+<% if @allowed_groups.any? -%>
+AllowGroups <%= @allowed_groups.join(" ") %>
+<% end -%>
+
+<% if @allowed_users.any? -%>
 AllowUsers <%= @allowed_users.join(" ") %>
-<% end %>
+<% end -%>

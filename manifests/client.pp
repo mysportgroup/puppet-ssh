@@ -1,5 +1,3 @@
-class ssh::client inherits ssh::params {
-  package { 'openssh-client':
-    ensure => present,
-  }
+class ssh::client ($package_version = 'present') inherits ssh::params {
+  package { 'openssh-client': ensure => $package_version, }
 }
