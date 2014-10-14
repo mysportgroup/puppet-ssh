@@ -5,6 +5,7 @@ class ssh::server (
   $password_authentication      = 'yes',
   $subsystem_sftp    = '/usr/lib/openssh/sftp-server',
   $permit_root_login = 'yes',
+  $listen_address = $::ipaddress,
   $host_keys         = $ssh::params::host_keys,
   $authorized_keys_command      = undef,
   $authorized_keys_command_user = undef,

@@ -7,7 +7,7 @@
 Port <%= @port %>
 # Use these options to restrict which interfaces/protocols sshd will bind to
 #ListenAddress ::
-#ListenAddress 0.0.0.0
+ListenAddress <%= @listen_address %>
 Protocol 2
 # HostKeys for protocol version 2
 <% @host_keys.each do |key| -%>
